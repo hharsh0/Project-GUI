@@ -1,29 +1,51 @@
 import {useRef,useEffect,useState} from "react"
 
-function Canvas() {
+function Canvas({tool, setTool}) {
     const canvasRef = useRef(null)
     const contextRef = useRef(null)
     const [isDrawing, setIsDrawing] = useState(false)
+    const [startPos, setStartPos] = useState(null);
+    const [endPos, setEndPos] = useState(null);
 
-    const startDrawing = ({ nativeEvent }) => {
-        const { offsetX, offsetY } = nativeEvent;
-        contextRef.current.beginPath();
-        contextRef.current.beginPath();
-        contextRef.current.moveTo(offsetX, offsetY);
+    const startDrawing = (event) => {
+        // const { offsetX, offsetY } = nativeEvent;
+        // contextRef.current.beginPath();
+        // contextRef.current.moveTo(offsetX, offsetY);
+        setStartPos({ x: event.clientX, y: event.clientY });
+        setEndPos({ x: event.clientX, y: event.clientY });
         setIsDrawing(true);
     }
 
-    const draw = ({ nativeEvent }) => {
+    const draw = (event) => {
         if (!isDrawing) {
             return;
         }
-        const { offsetX, offsetY } = nativeEvent;
-        contextRef.current.lineTo(offsetX, offsetY);
-        contextRef.current.stroke();
+        // const { offsetX, offsetY } = nativeEvent;
+        // contextRef.current.lineTo(offsetX, offsetY);
+        // contextRef.current.stroke();
+        setEndPos({ x: event.clientX, y: event.clientY });
     }
 
     const finishDrawing = () => {
-        contextRef.current.closePath();
+        // contextRef.current.closePath();
+        if (tool === "pencil") {
+          contextRef.current.beginPath();
+          contextRef.current.moveTo(startPos.x, startPos.y);
+          contextRef.current.lineTo(endPos.x, endPos.y);
+          contextRef.current.stroke();
+        } else if (tool === "rect") {
+          const x = Math.min(startPos.x, endPos.x);
+          const y = Math.min(startPos.y, endPos.y);
+          const width = Math.abs(startPos.x - endPos.x);
+          const height = Math.abs(startPos.y - endPos.y);
+          contextRef.current.fillRect(x, y, width, height);
+          contextRef.current.strokeRect(x, y, width, height);
+        } else if (tool === "line") {
+          contextRef.current.beginPath();
+          contextRef.current.moveTo(startPos.x, startPos.y);
+          contextRef.current.lineTo(endPos.x, endPos.y);
+          contextRef.current.stroke();
+        }
         setIsDrawing(false);
     }
 
@@ -38,6 +60,7 @@ function Canvas() {
         context.scale(2, 2);
         context.lineCap = "round";
         context.strokeStyle = "white";
+        context.fillStyle = "#121212";
         context.lineWidth = 5;
         contextRef.current = context;
     },[])

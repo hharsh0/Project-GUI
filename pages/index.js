@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <>
       <Selector tool={tool} setTool={setTool} />
-      <Canvas />
+      <Canvas tool={tool} setTool={setTool} />
     </>
-  )
+  );
 }
