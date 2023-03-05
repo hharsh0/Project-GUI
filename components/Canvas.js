@@ -25,7 +25,7 @@ function Canvas({tool, strokeColor, strokeWidth, fillColor}) {
   const startDrawing = (event) => {
     setStartPos({ x: event.clientX, y: event.clientY });
     setEndPos({ x: event.clientX, y: event.clientY });
-    if (tool === "pencil") {
+    if (tool === "pencil" || tool === 'eraser') {
       contextRef.current.beginPath();
       contextRef.current.moveTo(
         event.nativeEvent.offsetX,
@@ -39,7 +39,7 @@ function Canvas({tool, strokeColor, strokeWidth, fillColor}) {
     if (!isDrawing) {
       return;
     }
-    if (tool === "pencil") {
+    if (tool === "pencil" || tool === 'eraser') {
       contextRef.current.lineTo(
         event.nativeEvent.offsetX,
         event.nativeEvent.offsetY
@@ -50,7 +50,7 @@ function Canvas({tool, strokeColor, strokeWidth, fillColor}) {
   };
 
   const finishDrawing = () => {
-    if (tool === "pencil") {
+    if (tool === "pencil" || tool === 'eraser') {
       contextRef.current.closePath();
     } else if (tool === "rect") {
       const x = Math.min(startPos.x, endPos.x);
@@ -90,7 +90,13 @@ function Canvas({tool, strokeColor, strokeWidth, fillColor}) {
     contextRef.current.strokeStyle = strokeColor;
     contextRef.current.fillStyle = fillColor;
     contextRef.current.lineWidth = strokeWidth;
-  }, [strokeColor, strokeWidth, fillColor]);
+
+    if(tool === 'eraser'){
+      contextRef.current.globalCompositeOperation ='destination-out'
+    }else{
+      contextRef.current.globalCompositeOperation ='source-over'
+    }
+  }, [strokeColor, strokeWidth, fillColor,tool]);
 
   return (
     <>
