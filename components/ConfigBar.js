@@ -59,7 +59,7 @@ function ConfigBar({ strokeColor, strokeWidth, fillColor, setStrokeColor, setStr
                 strokeWidth === 1
                   ? "bg-[#4F4D6F] text-[#9D9AE1]"
                   : "hover:bg-[#3D3D3D]"
-              } h-7 w-7 rounded-md ring-1 ring-[#3D3D3D] flex justify-center items-center hover:bg-[#3D3D3D]`}
+              } h-7 w-7 rounded-md ring-1 ring-[#3D3D3D] flex justify-center items-center`}
             >
               <StrokeWidthA />
             </div>
@@ -69,13 +69,13 @@ function ConfigBar({ strokeColor, strokeWidth, fillColor, setStrokeColor, setStr
                 strokeWidth === 5
                   ? "bg-[#4F4D6F] text-[#9D9AE1]"
                   : "hover:bg-[#3D3D3D]"
-              } h-7 w-7 rounded-md ring-1 ring-[#3D3D3D] flex justify-center items-center hover:bg-[#3D3D3D]`}
+              } h-7 w-7 rounded-md ring-1 ring-[#3D3D3D] flex justify-center items-center`}
             >
               <StrokeWidthB />
             </div>
             <div
               onClick={() => setStrokeWidth(10)}
-              className={`h-7 w-7 rounded-md ring-1 ring-[#3D3D3D] flex justify-center items-center hover:bg-[#3D3D3D] ${
+              className={`h-7 w-7 rounded-md ring-1 ring-[#3D3D3D] flex justify-center items-center ${
                 strokeWidth === 10
                   ? "bg-[#4F4D6F] text-[#9D9AE1]"
                   : "hover:bg-[#3D3D3D]"
@@ -104,7 +104,7 @@ function ConfigBar({ strokeColor, strokeWidth, fillColor, setStrokeColor, setStr
                 edge === "round"
                   ? "bg-[#4F4D6F] text-[#9D9AE1]"
                   : "hover:bg-[#3D3D3D]"
-              } h-7 w-7 rounded-md ring-1 ring-[#3D3D3D] flex justify-center items-center hover:bg-[#3D3D3D]`}
+              } h-7 w-7 rounded-md ring-1 ring-[#3D3D3D] flex justify-center items-center`}
             >
               <EdgeRound />
             </div>
