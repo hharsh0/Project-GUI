@@ -19,7 +19,7 @@ function ConfigBar({ strokeColor, strokeWidth, fillColor, setStrokeColor, setStr
     }
   return (
     <>
-      <div className="bg-[#262627] relative ml-2 text-[#B2B2B2] text-sm w-64 rounded-lg p-4">
+      <div className="bg-[#262627] relative ml-2 text-[#B2B2B2] text-sm w-64 rounded-lg p-4 select-none">
         <div>
           <p>Stroke</p>
           <div className="my-2 flex items-center">

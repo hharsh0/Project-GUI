@@ -4,7 +4,7 @@ import { HandIcon, PencilIcon, PointerIcon,RectIcon, TextIcon,ImageIcon,EraseIco
 function Selector({tool, setTool}) {
   return (
     <>
-      <div className="absolute top-0 left-1/2 transform -translate-x-1/2 my-4 bg-[#262627] rounded-lg">
+      <div className="absolute top-0 left-1/2 transform -translate-x-1/2 my-4 bg-[#262627] rounded-lg select-none">
         <div className="flex gap-x-4 p-2">
           <div
             className={`cursor-pointer p-2 rounded-lg ${

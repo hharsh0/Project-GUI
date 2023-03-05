@@ -14,21 +14,30 @@ export default function Home() {
   const [edge, setEdge] = useState("sharp");
 
   return (
-    <div className='h-100vh w-100vw'>
+    <div
+      className={`h-100vh w-100vw ${tool === "pencil" && "cursor-crosshair"} ${
+        tool === "rect" && "cursor-crosshair"
+      } ${tool === "pointer" && "cursor-default"} ${tool === "text" && "cursor-text"}`}
+    >
       <div className="absolute top-0 left-0">
-        <button onClick={()=> setIsConfigBarOpen(!isConfigBarOpen)} className="hover:bg-[#3D3D3D] relative ring-inset p-4 rounded-lg bg-[#262627] my-4 ml-2 active:ring-2 active:ring-[#BDB9FE]">
+        <button
+          onClick={() => setIsConfigBarOpen(!isConfigBarOpen)}
+          className="hover:bg-[#3D3D3D] relative ring-inset p-4 rounded-lg bg-[#262627] my-4 ml-2 active:ring-2 active:ring-[#BDB9FE]"
+        >
           <HamburgerIcon />
         </button>
-        {isConfigBarOpen && <ConfigBar
-          strokeColor={strokeColor}
-          strokeWidth={strokeWidth}
-          fillColor={fillColor}
-          setStrokeColor={setStrokeColor}
-          setStrokeWidth={setStrokeWidth}
-          setFillColor={setFillColor}
-          edge={edge}
-          setEdge={setEdge}
-        />}
+        {isConfigBarOpen && (
+          <ConfigBar
+            strokeColor={strokeColor}
+            strokeWidth={strokeWidth}
+            fillColor={fillColor}
+            setStrokeColor={setStrokeColor}
+            setStrokeWidth={setStrokeWidth}
+            setFillColor={setFillColor}
+            edge={edge}
+            setEdge={setEdge}
+          />
+        )}
       </div>
 
       <Selector tool={tool} setTool={setTool} />
