@@ -1,6 +1,6 @@
 import {useRef,useEffect,useState} from "react"
 
-function Canvas({tool, setTool}) {
+function Canvas({tool, strokeColor, strokeWidth, fillColor}) {
     const canvasRef = useRef(null)
     const contextRef = useRef(null)
     const [isDrawing, setIsDrawing] = useState(false)
@@ -59,11 +59,16 @@ function Canvas({tool, setTool}) {
         const context = canvas.getContext("2d");
         context.scale(2, 2);
         context.lineCap = "round";
-        context.strokeStyle = "white";
         context.fillStyle = "#121212";
-        context.lineWidth = 5;
+        context.lineWidth = 1;
         contextRef.current = context;
-    },[])
+    }, [])
+    
+    useEffect(() => {
+        contextRef.current.strokeStyle = strokeColor;
+        contextRef.current.fillStyle = fillColor;
+        contextRef.current.lineWidth = strokeWidth;
+    },[strokeColor,strokeWidth,fillColor])
 
   return (
       <>
