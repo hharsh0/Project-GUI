@@ -8,11 +8,15 @@ function Canvas({tool, strokeColor, strokeWidth, fillColor}) {
     const [endPos, setEndPos] = useState(null);
 
     const startDrawing = (event) => {
-        // const { offsetX, offsetY } = nativeEvent;
-        // contextRef.current.beginPath();
-        // contextRef.current.moveTo(offsetX, offsetY);
         setStartPos({ x: event.clientX, y: event.clientY });
         setEndPos({ x: event.clientX, y: event.clientY });
+        if (tool === "pencil") {
+            contextRef.current.beginPath();
+            contextRef.current.moveTo(
+              event.nativeEvent.offsetX,
+              event.nativeEvent.offsetY
+            );
+        }
         setIsDrawing(true);
     }
 
@@ -20,34 +24,35 @@ function Canvas({tool, strokeColor, strokeWidth, fillColor}) {
         if (!isDrawing) {
             return;
         }
-        // const { offsetX, offsetY } = nativeEvent;
-        // contextRef.current.lineTo(offsetX, offsetY);
-        // contextRef.current.stroke();
+        if (tool === "pencil") {
+            contextRef.current.lineTo(
+              event.nativeEvent.offsetX,
+              event.nativeEvent.offsetY
+            );
+            contextRef.current.stroke();
+         }
         setEndPos({ x: event.clientX, y: event.clientY });
+
     }
 
-    const finishDrawing = () => {
-        // contextRef.current.closePath();
-        if (tool === "pencil") {
-          contextRef.current.beginPath();
-          contextRef.current.moveTo(startPos.x, startPos.y);
-          contextRef.current.lineTo(endPos.x, endPos.y);
-          contextRef.current.stroke();
-        } else if (tool === "rect") {
-          const x = Math.min(startPos.x, endPos.x);
-          const y = Math.min(startPos.y, endPos.y);
-          const width = Math.abs(startPos.x - endPos.x);
-          const height = Math.abs(startPos.y - endPos.y);
-          contextRef.current.fillRect(x, y, width, height);
-          contextRef.current.strokeRect(x, y, width, height);
-        } else if (tool === "line") {
-          contextRef.current.beginPath();
-          contextRef.current.moveTo(startPos.x, startPos.y);
-          contextRef.current.lineTo(endPos.x, endPos.y);
-          contextRef.current.stroke();
-        }
-        setIsDrawing(false);
-    }
+    const finishDrawing = ({ nativeEvent }) => {
+      if (tool === "pencil") {
+        contextRef.current.closePath();
+      } else if (tool === "rect") {
+        const x = Math.min(startPos.x, endPos.x);
+        const y = Math.min(startPos.y, endPos.y);
+        const width = Math.abs(startPos.x - endPos.x);
+        const height = Math.abs(startPos.y - endPos.y);
+        contextRef.current.fillRect(x, y, width, height);
+        contextRef.current.strokeRect(x, y, width, height);
+      } else if (tool === "pointer") {
+        contextRef.current.beginPath();
+        contextRef.current.moveTo(startPos.x, startPos.y);
+        contextRef.current.lineTo(endPos.x, endPos.y);
+        contextRef.current.stroke();
+      }
+      setIsDrawing(false);
+    };
 
     useEffect(() => {
         const canvas = canvasRef.current;
