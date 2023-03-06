@@ -17,7 +17,9 @@ export default function Home() {
     <div
       className={`h-100vh w-100vw ${tool === "pencil" && "cursor-crosshair"} ${
         tool === "rect" && "cursor-crosshair"
-      } ${tool === "pointer" && "cursor-default"} ${tool === "text" && "cursor-text"}`}
+      } ${tool === "pointer" && "cursor-default"} ${
+        tool === "text" && "cursor-text"
+      } ${tool === "eraser" && "cursor-[url(/eraser.svg),_pointer]"}`}
     >
       <div className="absolute top-0 left-0">
         <button
