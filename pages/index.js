@@ -15,7 +15,7 @@ export default function Home() {
 
   return (
     <div
-      className={`h-100vh w-100vw ${tool === "pencil" && "cursor-crosshair"} ${
+      className={`h-100vh w-100vw ${tool === "pencil" && "cursor-cell"} ${
         tool === "rect" && "cursor-crosshair"
       } ${tool === "pointer" && "cursor-default"} ${
         tool === "text" && "cursor-text"
