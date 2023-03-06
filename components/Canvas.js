@@ -92,8 +92,10 @@ function Canvas({tool, strokeColor, strokeWidth, fillColor}) {
     contextRef.current.lineWidth = strokeWidth;
 
     if(tool === 'eraser'){
+      contextRef.current.lineWidth = strokeWidth*5;
       contextRef.current.globalCompositeOperation ='destination-out'
-    }else{
+    } else {
+      contextRef.current.lineWidth = strokeWidth;
       contextRef.current.globalCompositeOperation ='source-over'
     }
   }, [strokeColor, strokeWidth, fillColor,tool]);
