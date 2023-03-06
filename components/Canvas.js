@@ -6,6 +6,8 @@ function Canvas({tool, strokeColor, strokeWidth, fillColor}) {
   const [isDrawing, setIsDrawing] = useState(false);
   const [startPos, setStartPos] = useState(null);
   const [endPos, setEndPos] = useState(null);
+  const [inputBoxes, setInputBoxes] = useState([]);
+
 
   // Load canvas data from localStorage when component mounts
 //   useEffect(() => {
@@ -21,6 +23,23 @@ function Canvas({tool, strokeColor, strokeWidth, fillColor}) {
 //       contextRef.current = context;
 //     }
 //   }, []);
+  
+  const handleClick = (e) => {
+    const x = e.nativeEvent.offsetX;
+    const y = e.nativeEvent.offsetY;
+
+    // Create a new input box at the clicked coordinates
+    if (tool === 'text') {
+      setInputBoxes([...inputBoxes, { x, y, value: "" }]);
+    }  
+  };
+
+  const handleInputChange = (index, value) => {
+    // Update the value of the input box at the given index
+    const newInputBoxes = [...inputBoxes];
+    newInputBoxes[index].value = value;
+    setInputBoxes(newInputBoxes);
+  };
 
   const startDrawing = (event) => {
     setStartPos({ x: event.clientX, y: event.clientY });
@@ -107,7 +126,19 @@ function Canvas({tool, strokeColor, strokeWidth, fillColor}) {
         onMouseDown={startDrawing}
         onMouseMove={draw}
         onMouseUp={finishDrawing}
+        onClick={handleClick}
       />
+      {/* Render input boxes */}
+      {inputBoxes.map((inputBox, index) => (
+        <input
+          key={index}
+          className='outline-none bg-transparent text-white'
+          type="text"
+          value={inputBox.value}
+          style={{ position: "absolute", left: inputBox.x, top: inputBox.y }}
+          onChange={(e) => handleInputChange(index, e.target.value)}
+        />
+      ))}
     </>
   );
 }
